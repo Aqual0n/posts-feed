@@ -3,17 +3,21 @@ import axios from 'axios'
 let api = 'http://localhost:3000'
 
 export default function fetchPosts() {
-    axios.get(`${api}/posts`)
-        .then(response => {
-            console.log(response.data)
-        })
+    return axios({
+        method: 'get',
+        url: `${api}/posts`
+    })
+        .then(response => response.data)
         .catch(error => {
             throw error
         })
 }
 
 export function fetchUser(email) {
-    axios.get(`${api}/users?login=${email}`)
+    return axios({
+        method: 'get',
+        url: `${api}/users?login=${email}`
+    })
         .then(response => {
             return response.data
         })
