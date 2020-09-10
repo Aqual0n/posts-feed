@@ -15,7 +15,7 @@ export default function fetchPosts() {
 export function fetchUser(email) {
     axios.get(`${api}/users?login=${email}`)
         .then(response => {
-            console.log(response.data)
+            return response.data
         })
         .catch(error => {
             console.log('no such user', error.message)

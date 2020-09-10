@@ -1,0 +1,18 @@
+@mixin newFont($family,$pathName,$weight) {
+    @font-face {
+        font-family: '#{$family}';
+        src: url('/public/fonts/#{$pathName}.woff2') format('woff2'), url('/public/fonts/#{$pathName}.woff') format('woff');
+        font-weight: #{$weight};
+        font-style: normal;
+    }
+}
+
+@include newFont('reg','Inter-Regular',400);
+@include newFont('bold','IBM-SemiBold',700);
+
+@font-face {
+    font-family: 'icon';
+    src: url('/fonts/icomoon.woff2') format('woff2'), url('/fonts/icomoon.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}

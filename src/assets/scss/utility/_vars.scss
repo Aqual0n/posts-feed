@@ -1,0 +1,25 @@
+//fonts
+$familyReg: 'reg', -apple-system, system-ui, blinkmacsystemfont, 'Lucida Grande', 'Lucida Sans Unicode', 'sans-serif';
+$familyBold: 'bold', -apple-system, system-ui, blinkmacsystemfont, 'Lucida Grande', 'Lucida Sans Unicode', 'sans-serif';
+
+//colors
+$black: #000;
+$white: #fff;
+
+//fonts
+$icon: icon, sans-serif;
+
+//breakpoints
+$tablet: 650px;
+$maxMobile: $tablet - 1px;
+$tabletLate: 768px;
+$maxMobileLate: $tabletLate - 1px;
+$desktop: 1200px;
+$maxTablet: $desktop - 1px;
+$maxRems: 1600px;
+
+@function toRem($size) {
+    $remSize: $size / 12 + rem;
+
+    @return #{$remSize};
+}
