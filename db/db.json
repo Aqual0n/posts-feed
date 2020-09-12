@@ -2,7 +2,7 @@
   "users": [
     {
       "id": 1,
-      "login": "writer@mail.com",
+        "login": "writer@mail.com",
       "password": 123456,
       "role": "writer"
     },

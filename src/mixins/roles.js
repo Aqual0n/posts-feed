@@ -4,7 +4,7 @@ export default {
             return this.userIsReader
         },
         canEdit () {
-            return this.userIsWriter
+            return this.userIsWriter && this.post.userId === this.currentUser.id
         },
         canCreate () {
             return this.userIsWriter
@@ -20,6 +20,9 @@ export default {
         },
         userIsGuest () {
             return this.currentUser.role === 'guest'
+        },
+        isLoginned () {
+            return this.currentUser.role !== 'guest'
         },
         currentUser () {
             return this.$store.state.currentUser

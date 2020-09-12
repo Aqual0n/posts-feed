@@ -10,6 +10,7 @@ export default new Vuex.Store({
     state: {
         posts: [],
         currentUser: {
+            id: null,
             name: 'Гость',
             role: 'guest'
         }

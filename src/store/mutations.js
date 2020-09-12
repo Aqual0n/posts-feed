@@ -5,4 +5,8 @@ export default {
         state.posts = posts
         // Vue.set(state.posts, posts)
     },
+    SET_CURRENT_USER: (state, user) => {
+        state.currentUser = user
+        // Vue.set(state.posts, posts)
+    },
 }
