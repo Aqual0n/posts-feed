@@ -13,15 +13,41 @@ export default function fetchPosts() {
         })
 }
 
-export function fetchUser(email) {
+export function fetchUser(login) {
     return axios({
         method: 'get',
-        url: `${api}/users?login=${email}`
+        url: `${api}/users?login=${login}`
     })
         .then(response => {
-            return response.data
+            if(response.data.length) {
+                return response.data[0]
+            } else {
+                // throwing error when there is no such user
+                throw new Error('no such user')
+            }
         })
         .catch(error => {
-            console.log('no such user', error.message)
+            throw error
+        })
+}
+
+export function sendClap(data) {
+    return axios({
+        method: 'put',
+        url: `${api}/posts/${data.id}`,
+        data: data
+    })
+        .catch(error => {
+            console.log(error)
+        })
+}
+
+export function deletePost(id) {
+    return axios({
+        method: 'delete',
+        url: `${api}/posts/${id}`
+    })
+        .catch(err => {
+            throw err
         })
 }

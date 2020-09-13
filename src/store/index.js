@@ -15,6 +15,11 @@ export default new Vuex.Store({
             role: 'guest'
         }
     },
+    getters: {
+        getPostById: state => id => {
+            return state.posts.find(post => post.id === id)
+        }
+    },
     actions,
     mutations,
     modules: {}

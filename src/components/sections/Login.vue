@@ -28,8 +28,6 @@
 </template>
 
 <script>
-import axios from 'axios'
-
 export default {
     data: () => ({
         inputs: {
@@ -48,34 +46,19 @@ export default {
     methods: {
         login () {
             if (this.validate()) {
-                axios({
-                    method: 'get',
-                    url: `http://localhost:3000/users/?login=${this.inputs.email.value}`
-                })
-                //todo: refactor
-                    .then(response => {
-                        const responseUser = response.data[0]
-                        const password = typeof responseUser.password === 'string' ? responseUser.password : responseUser.password.toString()
-                        if (response.data.length && responseUser.login === this.inputs.email.value && password === this.inputs.password.value) {
-
-                            const user = {
-                                id: responseUser.id,
-                                name: responseUser.login,
-                                role: responseUser.role
-                            }
-
-                            this.$store.commit('SET_CURRENT_USER', user)
-
-                            localStorage.setItem('currentUser', JSON.stringify(user))
-
-                            this.$router.push('/')
-                        } else {
-                            this.inputs.email.error = 'is-danger'
-                            this.inputs.email.errorText = 'Логин или пароль неверны'
-                        }
+                const userData = {
+                    login: this.inputs.email.value,
+                    password: this.inputs.password.value
+                }
+                this.$store.dispatch('AUTHORIZE_USER', userData)
+                    .then(user => {
+                        // saving authorized user in localStorage
+                        localStorage.setItem('currentUser', JSON.stringify(user))
+                        this.$router.push('/')
                     })
-                    .catch(error => {
-                        console.log(error)
+                    .catch(() => {
+                        this.inputs.email.error = 'is-danger'
+                        this.inputs.email.errorText = 'Логин или пароль неверны'
                     })
             }
         },

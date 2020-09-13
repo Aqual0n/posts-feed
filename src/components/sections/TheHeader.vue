@@ -13,7 +13,7 @@
                     ) Войти
                     +e.B-BUTTON.logout(
                         v-if="isLoginned"
-                        v-on:click="logout"
+                        v-on:click="confirmLogout"
                     ) Выход
 </template>
 
@@ -36,6 +36,15 @@ export default {
             if (this.$route.path !== '/') {
                 this.$router.push('/')
             }
+        },
+        confirmLogout () {
+            this.$buefy.dialog.confirm({
+                title: 'Выйти',
+                message: 'Вы уверены что хотите выйти?',
+                cancelText: 'Не выходить',
+                confirmText: 'Да, я хочу выйти',
+                onConfirm: this.logout
+            })
         }
     },
     computed: {

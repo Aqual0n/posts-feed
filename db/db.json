@@ -2,7 +2,7 @@
   "users": [
     {
       "id": 1,
-        "login": "writer@mail.com",
+      "login": "writer@mail.com",
       "password": 123456,
       "role": "writer"
     },
@@ -15,10 +15,28 @@
   ],
   "posts": [
     {
-      "id": 1,
+      "id": 2,
       "title": "Название поста",
       "description": "Текст",
-      "claps": 0,
+      "claps": 16,
+      "createdAt": "2019-09-29T00:00:00.000Z",
+      "updateAt": "2019-09-29T00:00:00.000Z",
+      "userId": 1
+    },
+    {
+      "id": 3,
+      "title": "Название поста",
+      "description": "Текст",
+      "claps": 7,
+      "createdAt": "2019-09-29T00:00:00.000Z",
+      "updateAt": "2019-09-29T00:00:00.000Z",
+      "userId": 1
+    },
+    {
+      "id": 4,
+      "title": "Название поста",
+      "description": "Текст",
+      "claps": 9,
       "createdAt": "2019-09-29T00:00:00.000Z",
       "updateAt": "2019-09-29T00:00:00.000Z",
       "userId": 1

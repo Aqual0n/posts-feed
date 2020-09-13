@@ -3,23 +3,25 @@
     +b.post
         +e.wrapper.box
             p {{post}}
-            +e.content
-                +e.title {{post.title}}
-                +e.text {{post.description}}
+            +e.content.content
+                h3 {{post.title}}
+                p {{post.description}}
             +e.controls
                 +e.B-BUTTON.clap(
                     v-if="canClap"
-                    icon-right="clap"
-                )
-                +e.B-BUTTON.edit(
+                    icon-left="heart"
+                    v-on:click="clap"
+                ) {{post.claps}}
+                +e.B-BUTTON.button(
                     v-if="canEdit"
                     type="is-dark"
-                    icon-right="edit"
+                    icon-right="pencil"
                 ) Редактировать
-                +e.B-BUTTON.delete(
+                +e.B-BUTTON.button(
                     v-if="canEdit"
                     type="is-danger"
                     icon-right="delete"
+                    v-on:click="confirmPostDelete"
                 )
 
 </template>
@@ -35,6 +37,39 @@ export default {
             required: true,
             type: Object
         }
-    }
+    },
+    methods: {
+        clap () {
+            const clappedPost = {
+                ...this.post,
+                claps: this.post.claps + 1,
+            }
+            this.$store.dispatch('SEND_CLAP', clappedPost)
+        },
+        confirmPostDelete() {
+            this.$buefy.dialog.confirm({
+                title: 'Удалить пост',
+                message: 'Вы уверены что хотите удалить ваш пост? Это действие нельзя отменить',
+                cancelText: 'Не удалять',
+                confirmText: 'Удалить пост',
+                type: 'is-danger',
+                hasIcon: true,
+                onConfirm: this.postDelete
+            })
+        },
+        postDelete () {
+            this.$store.dispatch('DELETE_POST', this.post.id)
+        }
+    },
 }
 </script>
+
+<style lang="scss">
+    .post {
+        &__button {
+            & + & {
+                margin-left: 8px;
+            }
+        }
+    }
+</style>
