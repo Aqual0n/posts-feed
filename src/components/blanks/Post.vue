@@ -2,29 +2,30 @@
     include ../../../tools/mixins.pug
     +b.post
         +e.wrapper.box
-            p {{post}}
             +e.content.content
                 h3 {{post.title}}
                 p {{post.description}}
-            +e.controls
-                +e.B-BUTTON.clap(
-                    v-if="canClap"
-                    icon-left="heart"
-                    v-on:click="clap"
-                ) {{post.claps}}
-                +e.B-BUTTON.button(
-                    v-if="canEdit"
-                    type="is-dark"
-                    icon-right="pencil"
-                    tag="router-link"
-                    :to="`/edit/${post.id}`"
-                ) Редактировать
-                +e.B-BUTTON.button(
-                    v-if="canEdit"
-                    type="is-danger"
-                    icon-right="delete"
-                    v-on:click="confirmPostDelete"
-                )
+            +e.bottom.columns.is-vcentered
+                +e.date.column {{postDate}}
+                +e.controls.column.is-narrow
+                    +e.B-BUTTON.clap(
+                        :disabled="!canClap"
+                        icon-left="heart"
+                        v-on:click="clap"
+                    ) {{post.claps}}
+                    +e.B-BUTTON.button(
+                        v-if="canEdit"
+                        type="is-dark"
+                        icon-right="pencil"
+                        tag="router-link"
+                        :to="`/edit/${post.id}`"
+                    ) Редактировать
+                    +e.B-BUTTON.button(
+                        v-if="canEdit"
+                        type="is-danger"
+                        icon-right="delete"
+                        v-on:click="confirmPostDelete"
+                    )
 
 </template>
 
@@ -63,6 +64,13 @@ export default {
             this.$store.dispatch('DELETE_POST', this.post.id)
         }
     },
+    computed: {
+        postDate () {
+            return Intl.DateTimeFormat('ru-RU', {
+                month: 'long', day: 'numeric'
+            }).format(Date.parse(this.post.createdAt))
+        }
+    }
 }
 </script>
 

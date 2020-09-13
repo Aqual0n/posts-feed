@@ -14,6 +14,11 @@
 </script>
 
 <style lang="scss">
-    @import "../src/assets/scss/critical";
-    @import "../src/assets/scss/main";
+    body {
+        min-width: 320px;
+        background-color: #ddd;
+        min-height: 100vh;
+        font-size: 14px;
+    }
+
 </style>

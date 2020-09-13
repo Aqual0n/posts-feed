@@ -2,6 +2,7 @@
     include ../../../tools/mixins.pug
     +b.login
         +e.container.container
+            // todo: add enter event listener
             +e.wrapper.box
                 +e.B-FIELD.line(
                     label="Логин"
@@ -91,7 +92,7 @@ export default {
 
         &__wrapper {
             margin: 0 auto;
-            width: 400px;
+            max-width: 400px;
         }
     }
 </style>

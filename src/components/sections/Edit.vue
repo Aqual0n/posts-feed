@@ -2,8 +2,8 @@
     include ../../../tools/mixins.pug
     +b.edit
         +e.container.container
-            +e.H2.title.title.is-2 {{getEditPageTitle}}
-            +e.wrapper
+            +e.wrapper.box
+                +e.H2.title.title.is-2 {{getEditPageTitle}}
                 +e.B-FIELD.line(
                     label="Название поста"
                 )
@@ -17,21 +17,21 @@
                         v-model="mutablePost.description"
                         type="textarea"
                     )
-            +e.bottom
-                // :disabled="!isEdited || (isCreate && validated)"
-                +e.B-BUTTON.button(
-                    v-on:click="save"
-                    type="is-success"
-                ) {{saveButtonText}}
-                +e.B-BUTTON.button(
-                    v-if="!isCreate"
-                    type="is-dark"
-                    :disabled="!isEdited"
-                ) Отменить
+                +e.bottom
+                    +e.B-BUTTON.button(
+                        v-on:click="save"
+                        type="is-success"
+                        :disabled="saveButtonDisabled"
+                    ) {{saveButtonText}}
+                    +e.B-BUTTON.button(
+                        v-if="!isCreate"
+                        v-on:click="confirmCancel"
+                        type="is-dark"
+                        :disabled="!isEdited"
+                    ) Отменить
 </template>
 
 <script>
-    // todo: add check if loginned user can actually edit this post
 export default {
     props: {
         post: {
@@ -40,8 +40,11 @@ export default {
         },
         canEdit: {
             type: Boolean,
-            required: true,
-            default: false
+            required: true
+        },
+        currentUser: {
+            type: Object,
+            required: true
         }
     },
     data: () => ({
@@ -56,17 +59,22 @@ export default {
         },
         save () {
             if(this.isCreate) {
+                let createdDate = new Date();
                 this.$store.dispatch('CREATE_POST', {
                     ...this.mutablePost,
-                    // todo: add role mixin, created_at, updated_at
-                    userId: 1,
-                    claps: 0
+                    userId: this.currentUser.id,
+                    claps: 0,
+                    createdAt: createdDate,
+                    updateAt: createdDate
                 })
                     .then(() => {
                         this.$buefy.notification.open({
                             message: 'Пост успешно создан',
                             type: 'is-success'
                         })
+
+                        this.mutablePost.title = ''
+                        this.mutablePost.description = ''
                     })
                     .catch(() => {
                         this.$buefy.notification.open({
@@ -75,10 +83,10 @@ export default {
                         })
                     })
             } else {
+                let updated = new Date().toISOString()
                 this.$store.dispatch('UPDATE_POST', {
                     ...this.mutablePost,
-                    // todo: add updating time logic
-                    updated_at: 1
+                    updateAt: updated
                 })
                     .then(() => {
                         this.$buefy.notification.open({
@@ -93,6 +101,18 @@ export default {
                         })
                     })
             }
+        },
+        cancel () {
+            this.setMutablePost()
+        },
+        confirmCancel () {
+            this.$buefy.dialog.confirm({
+                title: 'Отменить изменения',
+                message: 'Вы уверены что хотите отменить изменения?',
+                cancelText: 'Не отменять',
+                confirmText: 'Да, отменить',
+                onConfirm: this.cancel
+            })
         }
     },
     computed: {
@@ -107,6 +127,9 @@ export default {
                 return 'Создать пост'
             }
             return 'Сохранить изменения'
+        },
+        saveButtonDisabled () {
+            return this.isCreate ? !this.validated : !this.validated || !this.isEdited
         },
         isCreate () {
             return this.$route.params.id === 'create'
@@ -131,8 +154,13 @@ export default {
     .edit {
         padding-top: 80px;
 
+        &__wrapper {
+            margin: 0 auto;
+            max-width: 720px;
+        }
+
         &__line {
-            margin-bottom: 16px;
+            margin-bottom: 24px;
         }
 
         &__button {

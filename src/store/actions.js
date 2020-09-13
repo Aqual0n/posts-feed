@@ -39,10 +39,7 @@ export default {
                 }
             })
             .catch(err => {
-                if (err.message === 'no such user') {
-                    throw err
-                }
-                console.log(err)
+                throw err
             })
     },
 }

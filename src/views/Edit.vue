@@ -4,6 +4,7 @@
         edit-component(
             :post="post"
             :canEdit="canEdit"
+            :currentUser="currentUser"
         )
 </template>
 
@@ -24,9 +25,16 @@ export default {
     },
     methods: {
         fetchPost () {
-            if (this.$route.params.id !== 'create') {
-                this.$store.dispatch('FETCH_POSTS')
-            }
+            this.$store.dispatch('FETCH_POSTS')
+                .then(() => {
+                    if (this.post && (!this.userIsWriter || this.currentUser.id !== this.post.userId)) {
+                        console.log('wrongUser')
+                        this.$router.push('/')
+                    } else if (!this.$route.params.id === 'create' && !this.post) {
+                        console.log('404')
+                        this.$router.push('/404')
+                    }
+                })
         }
     },
     computed: {

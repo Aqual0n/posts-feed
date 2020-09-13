@@ -1,18 +1,35 @@
 <template lang="pug">
     include ../../../tools/mixins.pug
     +b.HEADER.header.navbar
-        +e.container.container
-            +e.left
-                +e.buttons--manage
+        +e.wrapper.navbar-brand
+            +e.item.navbar-item
+                +e.B-BUTTON.new(
+                    tag="router-link"
+                    to="/"
+                    v-if="!isPostPage"
+                    icon-left="keyboard-backspace"
+                ) Вернуться к постам
+            +e.burger.navbar-burger(
+                v-on:click="toggleActive"
+            )
+        +e.wrapper.navbar-menu(
+            :class="{'is-active': menuActive}"
+        )
+            +e.left.navbar-start
+            +e.right.navbar-end
+                +e.buttons--manage.navbar-item
                     +e.B-BUTTON.new(
                         tag="router-link"
                         to="/edit/create"
                         v-if="userIsWriter && !isCreatePage"
                         icon-right="creation"
                     ) Создать новый пост
-                +e.buttons--login(
+                +e.buttons--login.navbar-item(
                     v-if="!isLoginPage"
                 )
+                    p.navbar-item(
+                        v-if="!userIsGuest"
+                    ) {{currentUser.name}}
                     +e.B-BUTTON.login(
                         tag="router-link"
                         to="/login"
@@ -30,7 +47,13 @@ export default {
     mixins: [
         roles
     ],
+    data: () => ({
+        menuActive: false
+    }),
     methods: {
+        toggleActive () {
+            this.menuActive = !this.menuActive
+        },
         logout () {
             this.$store.commit('SET_CURRENT_USER', {
                 id: null,
@@ -60,6 +83,9 @@ export default {
         },
         isCreatePage () {
             return this.$route.path.indexOf('create') !== -1
+        },
+        isPostPage () {
+            return this.$route.path === '/'
         }
     }
 }
