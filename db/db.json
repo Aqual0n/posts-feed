@@ -16,30 +16,37 @@
   "posts": [
     {
       "id": 2,
-      "title": "Название поста",
-      "description": "Текст",
-      "claps": 16,
+      "title": "Название поста123",
+      "description": "Текст125412525",
+      "claps": 26,
       "createdAt": "2019-09-29T00:00:00.000Z",
       "updateAt": "2019-09-29T00:00:00.000Z",
       "userId": 1
     },
     {
       "id": 3,
-      "title": "Название поста",
-      "description": "Текст",
-      "claps": 7,
+      "title": "Название поста2",
+      "description": "Текст2",
+      "claps": 12,
       "createdAt": "2019-09-29T00:00:00.000Z",
       "updateAt": "2019-09-29T00:00:00.000Z",
       "userId": 1
     },
     {
       "id": 4,
-      "title": "Название поста",
-      "description": "Текст",
-      "claps": 9,
+      "title": "Название поста3",
+      "description": "Текст3",
+      "claps": 14,
       "createdAt": "2019-09-29T00:00:00.000Z",
       "updateAt": "2019-09-29T00:00:00.000Z",
       "userId": 1
+    },
+    {
+      "title": "124124",
+      "description": "124124",
+      "userId": 1,
+      "claps": 0,
+      "id": 5
     }
   ]
 }

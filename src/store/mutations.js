@@ -5,13 +5,19 @@ export default {
         state.posts = posts
         // Vue.set(state.posts, posts)
     },
+    SET_POST: (state, post) => {
+        state.posts.push(post)
+        // Vue.set(state.posts, posts)
+    },
     SET_CURRENT_USER: (state, user) => {
         state.currentUser = user
 
         // Vue.set(state.posts, posts)
     },
-    ADD_CLAP: (state, {id, getters}) => {
-        getters.getPostById(id).claps += 1
+    UPDATE_POST: (state, {post, getters}) => {
+        Object.keys(getters.getPostById(post.id)).forEach(key => {
+            getters.getPostById(post.id)[key] = post[key]
+        })
     },
     REMOVE_POST: (state, postId) => {
         state.posts.every((post, index) => {

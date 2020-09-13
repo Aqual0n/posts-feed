@@ -3,7 +3,14 @@
     +b.HEADER.header.navbar
         +e.container.container
             +e.left
-                +e.buttons(
+                +e.buttons--manage
+                    +e.B-BUTTON.new(
+                        tag="router-link"
+                        to="/edit/create"
+                        v-if="userIsWriter && !isCreatePage"
+                        icon-right="creation"
+                    ) Создать новый пост
+                +e.buttons--login(
                     v-if="!isLoginPage"
                 )
                     +e.B-BUTTON.login(
@@ -50,6 +57,9 @@ export default {
     computed: {
         isLoginPage () {
             return this.$route.path === '/login'
+        },
+        isCreatePage () {
+            return this.$route.path.indexOf('create') !== -1
         }
     }
 }

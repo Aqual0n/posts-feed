@@ -4,7 +4,7 @@ export default {
             return this.userIsReader
         },
         canEdit () {
-            return this.userIsWriter && this.post.userId === this.currentUser.id
+            return this.userIsWriter && this.post && this.post.userId === this.currentUser.id
         },
         canCreate () {
             return this.userIsWriter

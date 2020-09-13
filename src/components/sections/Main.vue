@@ -12,6 +12,7 @@
 
 <script>
 import Post from "../blanks/Post.vue";
+// todo: add pagination
 export default {
     props: {
         posts: {

@@ -42,11 +42,18 @@ export function sendClap(data) {
         })
 }
 
-export function deletePost(id) {
-    return axios({
-        method: 'delete',
-        url: `${api}/posts/${id}`
-    })
+export function managePost(method, {id, data}) {
+    let axiosConfig = {
+        method,
+        url: `${api}/posts/${id}`,
+    }
+
+    if (data) {
+        axiosConfig.data = data
+    }
+
+    return axios(axiosConfig)
+        .then(response => response.data)
         .catch(err => {
             throw err
         })

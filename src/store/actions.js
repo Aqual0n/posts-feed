@@ -1,16 +1,21 @@
 import fetchPosts from "../api";
 import {
-    sendClap,
     fetchUser,
-    deletePost
+    managePost
 } from "../api";
 
 export default {
     FETCH_POSTS: ({ commit, state }) => (state.posts.length
         ? Promise.resolve(state.posts)
         : fetchPosts().then(posts => commit('SET_POSTS', { posts }))),
-    SEND_CLAP: ({commit, getters}, data) => {
-        sendClap(data).then(() => commit('ADD_CLAP', {id: data.id, getters}))
+    UPDATE_POST: ({commit, getters}, post) => {
+        return managePost('put', {id: post.id, data: post}).then(() => commit('UPDATE_POST', {post, getters}))
+    },
+    CREATE_POST: ({commit}, post) => {
+        return managePost('post', {id: '', data: post}).then(newPost => commit('SET_POST', newPost))
+    },
+    DELETE_POST: ({commit}, postId) => {
+        managePost('delete', {id: postId}).then(() => commit('REMOVE_POST', postId))
     },
     AUTHORIZE_USER: ({ commit }, userData) => {
         return fetchUser(userData.login)
@@ -39,8 +44,5 @@ export default {
                 }
                 console.log(err)
             })
-    },
-    DELETE_POST: ({commit}, postId) => {
-        deletePost(postId).then(() => commit('REMOVE_POST', postId))
     },
 }

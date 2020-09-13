@@ -16,6 +16,8 @@
                     v-if="canEdit"
                     type="is-dark"
                     icon-right="pencil"
+                    tag="router-link"
+                    :to="`/edit/${post.id}`"
                 ) Редактировать
                 +e.B-BUTTON.button(
                     v-if="canEdit"
@@ -44,7 +46,7 @@ export default {
                 ...this.post,
                 claps: this.post.claps + 1,
             }
-            this.$store.dispatch('SEND_CLAP', clappedPost)
+            this.$store.dispatch('UPDATE_POST', clappedPost)
         },
         confirmPostDelete() {
             this.$buefy.dialog.confirm({
