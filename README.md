@@ -1,24 +1,15 @@
 # posts-test
 
-## Project setup
+## Для развёртывания выполнить
 ```
 npm install
 ```
-
-### Compiles and hot-reloads for development
 ```
 npm run serve
 ```
-
-### Compiles and minifies for production
 ```
-npm run build
+json-server --watch db/db.json
 ```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+в корне проекта
+#
+Проект будет запущен по адресу [localhost:8080](http://localhost:8080/)
