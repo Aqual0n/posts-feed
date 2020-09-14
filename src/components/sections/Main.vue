@@ -3,6 +3,10 @@
     +b.main(
         ref="main"
     )
+        +e.B-LOADING.loading(
+            :is-full-page="true"
+            v-model="loading"
+        )
         +e.container.container
             +e.wrapper
                 +e.posts
@@ -28,6 +32,10 @@ export default {
     props: {
         posts: {
             type: Array,
+            required: true
+        },
+        loading: {
+            type: Boolean,
             required: true
         }
     },

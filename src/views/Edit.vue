@@ -5,6 +5,7 @@
             :post="post"
             :canEdit="canEdit"
             :currentUser="currentUser"
+            :loading="loading"
         )
 </template>
 
@@ -16,6 +17,9 @@ export default {
     mixins: [
         roles
     ],
+    data: () => ({
+        loading: true
+    }),
     components: {
         'header-component': TheHeader,
         'edit-component': Edit
@@ -28,12 +32,18 @@ export default {
             this.$store.dispatch('FETCH_POSTS')
                 .then(() => {
                     if (this.post && (!this.userIsWriter || this.currentUser.id !== this.post.userId)) {
-                        console.log('wrongUser')
                         this.$router.push('/')
-                    } else if (!this.$route.params.id === 'create' && !this.post) {
-                        console.log('404')
+                    } else if (!(this.$route.params.id === 'create') && !this.post) {
                         this.$router.push('/404')
                     }
+                    this.loading = false
+                })
+                .catch(error => {
+                    this.$buefy.notification.open({
+                        message: `Произошла ошибка: ${error.message}`,
+                        type: 'is-danger'
+                    })
+                    this.loading = false
                 })
         }
     },

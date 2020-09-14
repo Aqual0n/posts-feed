@@ -12,6 +12,9 @@
             +e.burger.navbar-burger(
                 v-on:click="toggleActive"
             )
+                span
+                span
+                span
         +e.wrapper.navbar-menu(
             :class="{'is-active': menuActive}"
         )

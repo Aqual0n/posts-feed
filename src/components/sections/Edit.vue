@@ -1,6 +1,10 @@
 <template lang="pug">
     include ../../../tools/mixins.pug
     +b.edit
+        +e.B-LOADING.loading(
+            :is-full-page="true"
+            v-model="loading"
+        )
         +e.container.container
             +e.wrapper.box
                 +e.H2.title.title.is-2 {{getEditPageTitle}}
@@ -45,6 +49,10 @@ export default {
         currentUser: {
             type: Object,
             required: true
+        },
+        loading: {
+            type: Boolean,
+            required: true
         }
     },
     data: () => ({
@@ -76,9 +84,9 @@ export default {
                         this.mutablePost.title = ''
                         this.mutablePost.description = ''
                     })
-                    .catch(() => {
+                    .catch(error => {
                         this.$buefy.notification.open({
-                            message: 'Что-то пошло не так',
+                            message: `Что-то пошло не так: ${error.message}`,
                             type: 'is-danger'
                         })
                     })
@@ -94,9 +102,9 @@ export default {
                             type: 'is-success'
                         })
                     })
-                    .catch(() => {
+                    .catch(error => {
                         this.$buefy.notification.open({
-                            message: 'Что-то пошло не так',
+                            message: `Что-то пошло не так: ${error.message}`,
                             type: 'is-danger'
                         })
                     })

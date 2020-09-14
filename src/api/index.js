@@ -31,17 +31,6 @@ export function fetchUser(login) {
         })
 }
 
-export function sendClap(data) {
-    return axios({
-        method: 'put',
-        url: `${api}/posts/${data.id}`,
-        data: data
-    })
-        .catch(error => {
-            console.log(error)
-        })
-}
-
 export function managePost(method, {id, data}) {
     let axiosConfig = {
         method,
